@@ -196,10 +196,13 @@ class RPC(metaclass=ABCMeta):
         output = json.loads(payload.decode('utf-8'))
         self.get_output = output
 
-        if output['evt'] == "ERROR":
-            raise ActivityError
+        if 'evt' in output.keys():
+            if output['evt'] == "ERROR":
+                raise ActivityError
+            else:
+                print("Successfully set RPC")
         else:
-            print("Successfully set RPC")
+            print("There was an error setting RPC")
 
         return op, output
 
